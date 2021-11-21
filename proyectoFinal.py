@@ -21,7 +21,7 @@
        # E - Eliminar Libro
 
 #Grupos que deberán hacer Gestión de VideoClub: 2, 4, 6, 8.
-
+##############FUNCIONES####################
 #
 #  0 - Consulta de disponibilidad (deberá mostrar las películas que """"""NO ESTEN PRESTADAS""""""")
 def peliculasDisponibles():
@@ -45,23 +45,72 @@ def peliculasDisponibles():
 def prestamoPelicula():
     print("\nPrestamo de pelicula:")
 
+###funcionescliente####
 
+###funcionespelicula####
+def altaPelicula():
+	nombrePeli = input("Ingrese el nombre: ")
+	anioPeli = input("Ingrese el año: ")
+	generoPeli = input("Ingrese el genero: ")
+	directorPeli = input("Ingrese el director: ")
+	print("Se agregó una nueva pelicula ", agregoEntradaPeli(nombrePeli, anioPeli, generoPeli, directorPeli))
 
+def agregoEntradaPeli(nombrePeli, anioPeli, generoPeli, directorPeli):
+    with open("peliculas.txt", "a") as jArchi:
+	    jArchi.write(nombrePeli + "," + anioPeli + "," + generoPeli + "," + directorPeli + "\n")
+	    jArchi.close()
+
+##############FIN FUNCIONES####################
+
+#######MENUS########
 #Deberán mostrar un menú con las siguientes opciones:
 def menuPrincipal() : 
     print(""" Bienvenido al sistema de gestión de VideoClub BLOK-BUSTER
 
     ############## Sistema de Gestion ABM ###############
-     1 -Consulta de disponibilidad
+
+     1 - Consulta de disponibilidad
      
-     2 - Préstamo de  Película:
+     2 - Préstamo de  Película
         
-     3 - Gestión del cliente:
+     3 - Gestión del Cliente
 
-     4 - Gestión de  Película:
+     4 - Gestión de  Película
 
-     5 - Salir: 
+     5 - Salir
+
     ############## Sistema de Gestion ABM ##############\n """)
+
+def menuCliente(): 
+    print(""" ############## Gestión de  Cliente ###############
+
+     1 - Alta de cliente
+     
+     2 - Consulta estado del cliente
+        
+     3 - Modificar teléfono o direccion del cliente
+
+     4 - Eliminar cliente (deberán eliminar el registro y verificar que el archivo no quede con un registro en blanco)
+
+     5 - Volver al menu principal
+
+    ############## Gestión de  Película ##############\n """)
+
+def menuPelicula(): 
+    print(""" ############## Gestión de  Película ###############
+
+    1 - Alta Película
+     
+    2 - Modificar Pelicula
+        
+    3 - Eliminar Pelicula
+
+    4 - Volver al menu principal
+
+    ############## Gestión de  Película ##############\n """)
+#######FIN MENUS########
+
+#######MENU PRINCIPAL#########
 aux = 0
 while aux != 5:
     menuPrincipal()
@@ -94,8 +143,23 @@ while aux != 5:
       #  C - Consulta estado del cliente
        # M - Modificar teléfono o direccion del cliente
        # E - Eliminar cliente (deberán eliminar el registro y verificar que el archivo no quede con un registro en blanco)
+    
+    elif opcion == 3:
+        menuCliente()
+        opcionMenuCliente = int(input("Ingrese una opcion: "))    
+    
+    elif opcion == 4:
+        menuPelicula()
+        opcionMenuPelicula = int(input("Ingrese una opcion: "))
+        if opcionMenuPelicula == 1:
+            altaPelicula()
+        elif opcionMenuPelicula == 2:
+            modificarPelicula()
+        elif opcionMenuPelicula == 3:
+            modificarPelicula()
+        else:
+            print("Opcion no valida")
         
-
 
 
 
