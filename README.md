@@ -1,9 +1,14 @@
 # tp-grupal-py
  Gestion de VideoClub:
- Tendrán los siguientes archivos:.
+ Tendrán los siguientes archivos:
 
-     clientes.txt : con los siguientes campos en cada registro (línea, renglon): DNI, Nombre Completo, Telefono, direccion, estado, codigo de barra
-     peliculas.txt: campos: código de barra, titulo, genero, estado, DNI del cliente (solo cuando la pelicula esté en préstamo)
+    - clientes.txt : con los siguientes campos en cada registro (línea, renglon): DNI, Nombre Completo, Telefono, direccion, estado, codigo de barra
+    - peliculas.txt: campos: código de barra, titulo, genero, estado, DNI del cliente (solo cuando la pelicula esté en préstamo)
+
+    1 - Préstamo de Película : puede tener un sub-Menú que tenga las opciones:
+        A - Consultar todos los títulos/películas disponible (verificando el campo estado)
+        B - Registrar préstamo (deberá buscar la película y cambiar el campo de estado a "P" de prestado y en el cliente con "O" de ocupado)
+        C - Registrar Devolución (pedir datos necesarios para buscar el cliente y la pelicula, y cambiar el campo de estado dejándolo con "D" de disponible)
   
     2 - Gestión del cliente: tendrá un sub-menú:
         A - Alta de cliente
@@ -14,5 +19,5 @@
     3 - Gestión de pelicula:
         A - Alta Pelicula
         C - Modificar Pelicula
-        E - Eliminar Peñicula
+        E - Eliminar Pelicula
   
