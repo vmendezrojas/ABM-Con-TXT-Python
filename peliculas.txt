@@ -1,4 +1,4 @@
-codigo_de_barra, titulo, genero, estado, DNI del cliente
+Codigo_de_Barra, Titulo, Genero, Estado, DNI_Cliente
 1234567895,esta historia es real,fantasia,P,38880970
 1234567890,halloween,terror,D,None
 12345678091,Click,comedia,D,None
