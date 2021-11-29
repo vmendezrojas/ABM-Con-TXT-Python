@@ -1,3 +1,5 @@
-halloween,1983,terror,carpenter
-Click,2015,comedia,tarantino
-et,1988,ciencia ficcion,spilberg
+codigo_de_barra, titulo, genero, estado, DNI del cliente
+1234567895,esta historia es real,fantasia,P,38880970
+1234567890,halloween,terror,D,None
+12345678091,Click,comedia,D,None
+1234567892,et,ciencia ficcion,D,None

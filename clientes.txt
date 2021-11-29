@@ -1,0 +1,2 @@
+DNI, Nombre Completo, Telefono, direccion, Estado , Codigo_De_Barra, 
+38880970, Victor Mendez Rojas, 1166773310, calle falsa 123, O, 1234567895

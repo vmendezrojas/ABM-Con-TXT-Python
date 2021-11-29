@@ -1,10 +1,10 @@
 # TP GRUPAL - Proyecto Final
 #
-#Gestion de VideoClub / Biblioteca:
+#Gestion de VideoClub :
 #- Tendrán los siguientes archivos:
  #   1) clientes.txt : con los siguientes campos en cada registro (línea, renglon): DNI, Nombre Completo, Telefono, direccion, estado, codigo de barra o ISBN si es libro
   #  2) peliculas.txt (para el videoclub): campos: código de barra, titulo, genero, estado, DNI del cliente (solo cuando la pelicula esté en préstamo)
-   # 2) libros.txt (para la biblioteca) : campos: ISBN, Titulo, Autor, estado, DNI del cliente (solo cuando el libro esté en préstamo)
+  
 
 
  
@@ -24,15 +24,18 @@
 ##############FUNCIONES####################
 #
 #  0 - Consulta de disponibilidad (deberá mostrar las películas que """"""NO ESTEN PRESTADAS""""""")
+filename1="peliculas.txt"
+filename2="clientes.txt"
 def peliculasDisponibles():
     print("\nPeliculas disponibles:")
     with open("peliculas.txt", "r") as pArchivo:
-        print("***************** LISTA COMPLETA ***************")
-        print("{4}{0:^8}{4} {4}{1:^16}{4} {4}{2:^15}{4} {4}{3:^11}{4}".format("DNI","Nombre", "Apellido", "Telefono", "|"))
+        print("***************** LISTA COMPLETA ***************")   #código de barra, titulo, genero, estado, DNI del cliente
+        
         linea = pArchivo.readline()
         while linea != "":
             renglon = linea.split(',')
-            print("{4}{0:>8}{4} {4}{1:16s}{4} {4}{2:15s}{4} {4}{3:>11}{4}".format(renglon[0], renglon[1], renglon[2], renglon[3][:-1], "|"))
+            if renglon[3] == "D":
+                print(renglon[0], renglon[1], renglon[2], renglon[3], renglon[4])
             linea = pArchivo.readline()
             print("------------------------------------------------------------")
             pArchivo.close()
@@ -154,9 +157,11 @@ while aux != 5:
         if opcionMenuPelicula == 1:
             altaPelicula()
         elif opcionMenuPelicula == 2:
-            modificarPelicula()
+            print("Modificar Pelicula")
+           # modificarPelicula()
         elif opcionMenuPelicula == 3:
-            modificarPelicula()
+            #modificarPelicula()
+            print("Eliminar Pelicula")
         else:
             print("Opcion no valida")
         
