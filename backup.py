@@ -9,19 +9,159 @@
 import os
 #funciones
 #1 - Consultar disponibilidad película
-fichero = open("peliculas.txt", "r")
 def peliculasDisponibles():
-    with fichero as pArchivo:
+    with open("peliculas.txt","r+" ) as pArchivo:
         print("***************** LISTA COMPLETA ***************\n")
-        print("{0:^8} {1:^16} {2:^15} {3:^11} {4:^11}".format("Codigo_de_Barra","Titulo", "Genero", "Estado", "DNI_Cliente" , "|"))
+        print("{0:^16} {1:^16} {2:^16} {3:^16} {4:^16}".format("Codigo_de_Barra","Titulo", "Genero", "Estado", "DNI_Cliente" , "|"))
         #print("{0:<10} {1:>8} {2:>8} {3:<6} {4:>8}".format("Codigo_de_Barra","Titulo", "Genero", "Estado", "DNI_Cliente" , "|"))
         for linea in pArchivo:
             datos = linea.split(',')
-            if datos[3] == 'D':
-                print("{0:^8} {1:^16} {2:^15} {3:^11} {4:^11}".format(datos[0], datos[1], datos[2], datos[3], datos[4]))
+            if 'D' in datos[3]:
+                datos[3] = "Disponible"
+                print("{0:^16} {1:^16} {2:^16} {3:^16} {4:^16}".format(datos[0], datos[1], datos[2], datos[3], datos[4]))
                    #código de barra, titulo, genero, estado, DNI del cliente
-            else:
-                print("No hay Peliculas Disponibles")
+            
+                #código de barra, titulo, genero, estado, DNI del cliente
+    #fin funcion peliculasDisponibles
+
+#prestamo de pelicula
+'''
+def prestamoPelicula(codigo,codigoCliente):
+    with open("peliculas.txt","r+") as pArchivo:
+        with open("clientes.txt","r+") as cArchivo:
+            
+            for linea in pArchivo:
+                datos = linea.split(',')
+                if codigo in datos:
+                    if 'D' in datos[3]:
+                        print("Pelicula disponible")
+                        
+                        for linea in cArchivo:
+                            datos = linea.split(',')
+                            if codigoCliente in datos:
+                                if 'O' in datos[3]:
+                                    print("Cliente ocupado")
+                                    break
+                                else:
+                                    datos[3] = "O"
+                                    datos[4] = codigo
+                                    print("Prestamo realizado")
+                                    break
+                            else:
+                                print("Cliente no registrado")
+                                break
+                    else:
+                        print("Pelicula no disponible")
+                        break
+                else:
+                    print("Pelicula no registrada")
+                    break
+       
+'''
+def modificarPeliculas(codigo):
+    with open("peliculas.txt","r+") as pArchivo:
+        with open("peliculascpy.txt","w") as pArchivocpy:
+            estado = "D"
+            estado2= "p"
+            linea = pArchivo.readline()
+            while linea != "":
+                renglon = linea.split(',')
+                if estado == renglon[3] and codigo == renglon[0]:
+                    pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+str(estado)+','+renglon[4]+'\n')
+                elif estado2 == renglon[3] and codigo == renglon[0]:
+                    pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+str(estado2)+','+renglon[4]+'\n')
+                else:
+                    pArchivocpy.write(linea)
+                linea = pArchivo.readline()
+            pArchivocpy.close()
+        pArchivo.close()
+
+def modificarCliente(codigoCliente):
+    with open("clientes.txt","r+") as cArchivo:
+        with open("clientescpy.txt","w") as cArchivocpy:
+            estado = "L"
+            estado2= "O"
+            linea = cArchivo.readline()
+            while linea != "":
+                renglon = linea.split(',')
+                if codigoCliente == renglon[0] and estado == renglon[4]:
+                    cArchivocpy.write(str(codigoCliente)+','+renglon[1]+','+renglon[2]+','+renglon[3]+','+str(estado)+'\n')
+                elif codigoCliente == renglon[0] and estado2 == renglon[4]:
+                    cArchivocpy.write(str(codigoCliente)+','+renglon[1]+','+renglon[2]+','+renglon[3]+','+str(estado2)+'\n')
+                else:
+                    cArchivocpy.write(linea)
+                linea = cArchivo.readline()
+            cArchivocpy.close()
+        cArchivo.close()
+
+def prestamoPelicula(codigo,codigoCliente):
+    modificarPeliculas(codigo)
+    modificarCliente(codigoCliente)
+    #fin funcion prestamoPelicula
+
+# c devoluion de pelicula
+def devolucionPelicula(codigo,codigoCliente):
+    modificarPeliculas(codigo)
+    modificarCliente(codigoCliente)
+    #fin funcion devolucionPelicula
+
+# Menu clientes 
+#ALTA CLIENTE
+def altaCliente(dni,nombreYapellido,telF,direccion,estado,codigo):
+    with open("clientes.txt","a") as cArchivo:
+        cArchivo.write(str(dni)+','+nombreYapellido+','+str(telF)+','+str(direccion)+','+estado+','+str(codigo)+'\n')
+    cArchivo.close()
+
+# Consultar estado del cliente
+def consultarCliente(dni):
+    clientes= []
+    with open("clientes.txt","r+") as cArchivo:
+        for linea in cArchivo:
+            datos = linea.split(',')
+            if dni in datos:
+                clientes.append(datos)
+                print(clientes)
+    #fin funcion estado cliente
+
+def modificarTelefonoYdireccionCliente(dni,telefono,direccion):
+    with open("clientes.txt","r+") as cArchivo:
+        with open("clientescpy.txt","w") as cArchivocpy:
+            linea = cArchivo.readline()
+            while linea != "":
+                renglon = linea.split(',')
+                if dni == renglon[0]:
+                    cArchivocpy.write(str(dni)+','+renglon[1]+','+str(telefono)+','+str(direccion)+','+renglon[4]+renglon[5]+'\n')
+                else:
+                    cArchivocpy.write(linea)
+                linea = cArchivo.readline()
+            cArchivocpy.close()
+        cArchivo.close()
+
+    with open("clientes.txt","w") as cArchivo:
+        with open("clientescpy.txt","r+") as cArchivocpy:
+            for datos in cArchivocpy:
+                cArchivo.write(datos)
+                cArchivo.close()
+            cArchivocpy.close()
+
+def eliminarCliente(dni):
+    with open("clientes.txt","r+") as cArchivo:
+        with open("clientescpy.txt","w") as cArchivocpy:
+            linea = cArchivo.readline()
+            while linea != "":
+                renglon = linea.split(',')
+                if dni != renglon[0]:
+                    cArchivocpy.write(linea)
+                linea = cArchivo.readline()
+            cArchivocpy.close()
+        cArchivo.close()
+
+    with open("clientes.txt","w") as cArchivo:
+        with open("clientescpy.txt","r+") as cArchivocpy:
+            for datos in cArchivocpy:
+                cArchivo.write(datos)
+                cArchivo.close()
+            cArchivocpy.close()
 
 
 
@@ -48,9 +188,64 @@ while opcion != 5:
         
 
     elif opcion == 2:
-        print("Prestamo de pelicula")
+        
+        opcion2 = str(input("""\n\nQue desea hacer?: 
+        A-Consultar Peliculas Disponibles
+        B-Registrar Préstamo
+        C-Registrar Devolución \n
+        Elija una opcion:
+         """))
+        if opcion2 == "A" or opcion2 == "a":
+            peliculasDisponibles()
+        elif opcion2 == "B" or opcion2 == "b":
+            print("\nRegistrar Préstamo\n")
+            codigo = input("Ingrese el codigo de barra de la pelicula a prestar\n")
+            codigoCliente = input("Ingrese el DNI del cliente\n")
+            print("Se realizo el prestamo " ,prestamoPelicula(codigo,codigoCliente))
+           # registrarPrestamo(#codigo_barra, dni_cliente)#
+
+
+        elif opcion2 == "C" or opcion2 == "c":
+            print("Registrar Devolución\n")
+            codigo = input("Ingrese el codigo de barra de la pelicula a devolver\n")
+            codigoCliente = input("Ingrese el DNI del cliente\n")
+            print("Se realizo la devolucion " ,devolucionPelicula(codigo,codigoCliente))
+        
+        else:
+            print("Opcion no valida")
+
     elif opcion == 3:
-        print("Gestionar Clientes")
+        opcion3 = str(input("""\n\nQue desea hacer?: 
+        A- Alta Cliente
+        B- Consultar estado del Cliente
+        C- Modificar Telefono o direccion del Cliente 
+        D- Eliminar Cliente\n
+        Elija una opcion:
+         """))
+        if opcion3 == "A" or opcion3 == "a":
+            print("\nAlta Cliente\n")
+            dni = input("Ingrese el DNI del cliente\n")
+            nombreYapellido = input("Ingrese el nombre y apellido del cliente\n")
+            telF = input("Ingrese el telefono fijo del cliente\n")
+            direccion = input("Ingrese la direccion del cliente\n")
+            estado = "L"
+            codigo = input("Sin reservas por 48hs hasta completar alta definitiva\n")
+            altaCliente(dni,nombreYapellido,telF,direccion,estado,codigo)
+            print("Se registro el cliente")
+        elif opcion3 == "B" or opcion3 == "b":
+            print("\nConsultar estado del Cliente\n")
+            dni = input("Ingrese el DNI del cliente\n")
+            consultarCliente(dni)
+        elif opcion3 == "C" or opcion3 == "c":
+            print("\nModificar Telefono o direccion del Cliente\n")
+            dni = input("Ingrese el DNI del cliente\n")
+            telF = input("Ingrese el nuevo telefono  del cliente\n")
+            direccion = input("Ingrese la nueva direccion del cliente\n")
+            modificarTelefonoYdireccionCliente(dni,telF,direccion)
+        elif opcion3 == "D" or opcion3 == "d":
+            print("\nEliminar Cliente\n")
+            dni = input("Ingrese el DNI del cliente\n")
+            eliminarCliente(dni)
     elif opcion == 4:
         print("Gestionar Peliculas")
     elif opcion == 5:
