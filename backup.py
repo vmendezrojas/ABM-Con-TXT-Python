@@ -291,8 +291,8 @@ while opcion != 5:
             altaCliente(dni,nombreYapellido,telF,direccion,estado,codigo)
             print("Se registro el cliente")
         elif opcion3 == "B" or opcion3 == "b":
-            print("\nConsultar estado de pelicula\n")
-            dni = input("Ingrese el codigo de barras de la pelicula\n")
+            print("\nConsultar estado del Cliente\n")
+            dni = input("Ingrese el DNI del cliente\n")
             consultarCliente(dni)
         elif opcion3 == "C" or opcion3 == "c":
             print("\nModificar Telefono o direccion del Cliente\n")
@@ -341,8 +341,3 @@ while opcion != 5:
     else:
         print("Opcion no valida")
 #fin llamadas a funciones
-
-def altaPelicula(codigoBarras,tituloPeli, anioPeli, generoPeli, estadoPeli, dniAlquiler):
-    with open("peliculas.txt", "a") as jArchi:
-        jArchi.write(codigoBarras + "," + tituloPeli + "," + anioPeli + "," + generoPeli + "," + estadoPeli + "," + dniAlquiler +"\n")
-        jArchi.close()
