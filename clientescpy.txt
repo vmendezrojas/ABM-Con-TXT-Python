@@ -1,0 +1,2 @@
+12345678, Victor Mendez Rojas, 1166773310, calle falsa 123, O, 1234567895
+38880970,pablo,11223344556677,falsa 123, L, None
