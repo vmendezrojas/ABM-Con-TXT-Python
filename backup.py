@@ -1,11 +1,4 @@
 
-
-# 1 - Préstamo de/ Película : puede tener un sub-Menú que tenga las opciones:
-   #     A - Consultar todos las/películas disponibles (verificando el campo estado)
-    #    B - Registrar préstamo (deberá buscar película y cambiar el campo de estado a 
-    # "P" de prestado y en el cliente con "O" de ocupado)
-     #   C - Registrar Devolución (pedir datos necesarios para buscar el cliente y  pelicula y cambiar 
-     # el campo de estado dejándolo con "D" de disponible)
 import os
 #funciones
 #1 - Consultar disponibilidad película
@@ -20,44 +13,11 @@ def peliculasDisponibles():
                 datos[3] = "Disponible"
                 print("{0:^16} {1:^16} {2:^16} {3:^16} {4:^16}".format(datos[0], datos[1], datos[2], datos[3], datos[4]))
                    #código de barra, titulo, genero, estado, DNI del cliente
-            
-                #código de barra, titulo, genero, estado, DNI del cliente
+                       
     #fin funcion peliculasDisponibles
 
 #prestamo de pelicula
-'''
-def prestamoPelicula(codigo,codigoCliente):
-    with open("peliculas.txt","r+") as pArchivo:
-        with open("clientes.txt","r+") as cArchivo:
-            
-            for linea in pArchivo:
-                datos = linea.split(',')
-                if codigo in datos:
-                    if 'D' in datos[3]:
-                        print("Pelicula disponible")
-                        
-                        for linea in cArchivo:
-                            datos = linea.split(',')
-                            if codigoCliente in datos:
-                                if 'O' in datos[3]:
-                                    print("Cliente ocupado")
-                                    break
-                                else:
-                                    datos[3] = "O"
-                                    datos[4] = codigo
-                                    print("Prestamo realizado")
-                                    break
-                            else:
-                                print("Cliente no registrado")
-                                break
-                    else:
-                        print("Pelicula no disponible")
-                        break
-                else:
-                    print("Pelicula no registrada")
-                    break
-       
-'''
+
 
 #PELICULAS
 def altaPelicula(codigoBarras,tituloPeli, generoPeli, estadoPeli, dniAlquiler):
@@ -73,46 +33,48 @@ def consultarPelicula(codigoBarras):
             if codigoBarras in datos:
                 pelicula.append(datos)
                 print(pelicula)
+    
+    #fin funcion consultarPelicula
 
 def modificarPelicula(codigoBarras, tituloPeli):
     with open("peliculas.txt", "r") as pelisOriginal:
-	    with open("peliculascopy.txt", "w") as pelisCopia:
-		    filaPeli = pelisOriginal.readline()
-		    while filaPeli != "":
-			    renglon = filaPeli.split(',')
-			    if codigoBarras == renglon[0]:
-				    pelisCopia.writelines(renglon[0] + "," + tituloPeli + "," + renglon[2] + "," + renglon[3] + "\n")
-			    else:
-				    pelisCopia.write(filaPeli)
-			    filaPeli = pelisOriginal.readline()
-		    pelisCopia.close()
-	    pelisOriginal.close()
-		
+        with open("peliculascopy.txt", "w") as pelisCopia:
+            filaPeli = pelisOriginal.readline()
+            while filaPeli != "":
+                renglon = filaPeli.split(',')
+                if codigoBarras == renglon[0]:
+                    pelisCopia.writelines(str(codigoBarras) + "," + str(tituloPeli) + "," + renglon[2] + "," + renglon[3] + renglon[4] + "\n")
+                else:
+                    pelisCopia.write(filaPeli)
+                filaPeli = pelisOriginal.readline()
+            pelisCopia.close()
+        pelisOriginal.close()
+        
     with open("peliculascopy.txt", "r") as pelisCopia:
-	    with open("peliculas.txt", "w") as pelisOriginal:
-		    for registro in pelisCopia:
-			    pelisOriginal.write(registro)
-		    pelisCopia.close()
-	    pelisOriginal.close()
+        with open("peliculas.txt", "w") as pelisOriginal:
+            for registro in pelisCopia:
+                pelisOriginal.write(registro)
+            pelisCopia.close()
+        pelisOriginal.close()
 
 def eliminarPelicula(codigoPeliEliminar):
     with open("peliculas.txt", "r") as rArchi:
-	    with open("peliculascopy.txt", "w") as wArchi:
-		    linea = rArchi.readline()
-		    while linea != "":
-			    renglon = linea.split(',')
-			    if codigoPeliEliminar != renglon[0]:
-				    wArchi.write(linea)
-			    linea = rArchi.readline()
-		    wArchi.close()
-	    rArchi.close()
-		
+        with open("peliculascopy.txt", "w") as wArchi:
+            linea = rArchi.readline()
+            while linea != "":
+                renglon = linea.split(',')
+                if codigoPeliEliminar != renglon[0]:
+                    wArchi.write(linea)
+                linea = rArchi.readline()
+            wArchi.close()
+        rArchi.close()
+        
     with open("peliculascopy.txt", "r") as fcopia:
-	    with open("peliculas.txt", "w") as foriginal:
-		    for registro in fcopia:
-			    foriginal.write(registro)
-		    fcopia.close()
-	    foriginal.close()  
+        with open("peliculas.txt", "w") as foriginal:
+            for registro in fcopia:
+                foriginal.write(registro)
+            fcopia.close()
+        foriginal.close()  
 
 ########
 
@@ -124,13 +86,20 @@ def modificarPeliculas(codigo):
             linea = pArchivo.readline()
             while linea != "":
                 renglon = linea.split(',')
-                if estado == renglon[3] and codigo == renglon[0]:
+                if codigo == renglon[0] and estado == renglon[3]:
                     pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+str(estado)+','+renglon[4]+'\n')
-                elif estado2 == renglon[3] and codigo == renglon[0]:
+                elif codigo == renglon[0] and estado2 == renglon[3]:
                     pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+str(estado2)+','+renglon[4]+'\n')
                 else:
                     pArchivocpy.write(linea)
                 linea = pArchivo.readline()
+            pArchivocpy.close()
+        pArchivo.close()
+
+    with open("peliculascpy.txt","r+") as pArchivocpy:
+        with open("peliculas.txt","w") as pArchivo:
+            for linea in pArchivocpy:
+                pArchivo.write(linea)
             pArchivocpy.close()
         pArchivo.close()
 
@@ -149,6 +118,13 @@ def modificarCliente(codigoCliente):
                 else:
                     cArchivocpy.write(linea)
                 linea = cArchivo.readline()
+            cArchivocpy.close()
+        cArchivo.close()
+
+    with open("clientescpy.txt","r+") as cArchivocpy:
+        with open("clientes.txt","w") as cArchivo:
+            for linea in cArchivocpy:
+                cArchivo.write(linea)
             cArchivocpy.close()
         cArchivo.close()
 
@@ -250,7 +226,8 @@ while opcion != 5:
         opcion2 = str(input("""\n\nQue desea hacer?: 
         A-Consultar Peliculas Disponibles
         B-Registrar Préstamo
-        C-Registrar Devolución \n
+        C-Registrar Devolución
+        D- Volver al menu principal \n
         Elija una opcion:
          """))
         if opcion2 == "A" or opcion2 == "a":
@@ -269,6 +246,9 @@ while opcion != 5:
             codigoCliente = input("Ingrese el DNI del cliente\n")
             print("Se realizo la devolucion " ,devolucionPelicula(codigo,codigoCliente))
         
+        elif opcion2 == "D" or opcion2 == "d":
+            print("\nvolviendo al menu principal\n",menuPrincipal())
+            
         else:
             print("Opcion no valida")
 
@@ -277,7 +257,8 @@ while opcion != 5:
         A- Alta Cliente
         B- Consultar estado del Cliente
         C- Modificar Telefono o direccion del Cliente 
-        D- Eliminar Cliente\n
+        D- Eliminar Cliente
+        E- Volver al menu principal\n
         Elija una opcion:
          """))
         if opcion3 == "A" or opcion3 == "a":
@@ -304,12 +285,17 @@ while opcion != 5:
             print("\nEliminar Cliente\n")
             dni = input("Ingrese el DNI del cliente\n")
             eliminarCliente(dni)
+        elif opcion3 == "E" or opcion3 == "e":
+            print("\nvolviendo al menu principal\n",menuPrincipal())
+        else:
+            print("Opcion no valida")
     elif opcion == 4:
         opcion4 = str(input("""\n\nQue desea hacer?: 
         A- Alta Pelicula
         B- Consultar datos Pelicula
         C- Modificar Pelicula
-        D- Eliminar Pelicula\n
+        D- Eliminar Pelicula
+        E- Volver al menu principal\n
         Elija una opcion:
          """))
         if opcion4 == "A" or opcion4 == "a":
@@ -336,6 +322,10 @@ while opcion != 5:
             print("\nEliminar pelicula\n")
             codigoPeliEliminar = input("Ingrese el codigo de la pelicula\n")
             eliminarPelicula(codigoPeliEliminar)
+        elif opcion4 == "E" or opcion4 == "e":
+            print("\nvolviendo al menu principal\n",menuPrincipal())
+        else:
+            print("Opcion no valida")
     elif opcion == 5:
         print("Saliendo")
     else:

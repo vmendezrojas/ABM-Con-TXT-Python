@@ -1,5 +1,8 @@
 1,historia,fantasia,D,None
+
 2,halloween,terror,D,None
 3,Click,comedia,D,None
 4,et,ciencia ficcion,D,None
 5,esta historia es real,fantasia,P,38880975
+6,Happy Feet,Infantil,D,None
+7,La casa Gucci,Drama,D,None
