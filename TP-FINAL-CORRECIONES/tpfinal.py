@@ -85,7 +85,7 @@ def eliminarPelicula(codigoPeliEliminar):
 
 #OPCION ALQUILER
 
-def modificarPeliculas(codigo):
+def modificarPeliculas(codigo,codigoCliente):
     with open("peliculas.txt","r+") as pArchivo:
         with open("peliculascopy.txt","w") as pArchivocpy:
             estadoD = "D"
@@ -94,9 +94,9 @@ def modificarPeliculas(codigo):
             while linea != "":
                 renglon = linea.split(',')
                 if estadoD == str(renglon[3]) and codigo == str(renglon[0]):
-                    pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+ estadoP +','+renglon[4])
+                    pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+ estadoP +','+ codigoCliente +'\n')
                 elif estadoP == renglon[3] and codigo == renglon[0]:
-                    pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+ estadoD +','+renglon[4])
+                    pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+ estadoD +','+ "None")
                 else:
                     pArchivocpy.write(linea)
                 linea = pArchivo.readline()
@@ -121,7 +121,7 @@ def modificarCliente(codigo,codigoCliente):
                 if codigoCliente == renglon[0] and estadoL == renglon[4]:
                     cArchivocpy.write(str(codigoCliente)+','+renglon[1]+','+renglon[2]+','+renglon[3]+','+ estadoO + ',' + codigo + '\n')
                 elif codigoCliente == renglon[0] and estadoO == renglon[4]:
-                    cArchivocpy.write(str(codigoCliente)+','+renglon[1]+','+renglon[2]+','+renglon[3]+','+ estadoL +'\n')
+                    cArchivocpy.write(str(codigoCliente)+','+renglon[1]+','+renglon[2]+','+renglon[3]+','+ estadoL+',' +'\n')
                 else:
                     cArchivocpy.write(linea)
                 linea = cArchivo.readline()
@@ -137,13 +137,13 @@ def modificarCliente(codigo,codigoCliente):
 
 
 def prestamoPelicula(codigo,codigoCliente):
-    modificarPeliculas(codigo)
+    modificarPeliculas(codigo,codigoCliente)
     modificarCliente(codigo,codigoCliente)
     #fin funcion prestamoPelicula
 
 # c devoluion de pelicula
 def devolucionPelicula(codigo,codigoCliente):
-    modificarPeliculas(codigo)
+    modificarPeliculas(codigo,codigoCliente)
     modificarCliente(codigo,codigoCliente)
     #fin funcion devolucionPelicula
 
@@ -238,7 +238,7 @@ while opcion != 5:
             print("\nRegistrar Préstamo\n")
             codigo = input("Ingrese el codigo de barra de la pelicula a prestar\n")
             codigoCliente = input("Ingrese el DNI del cliente\n")
-            print("Se realizo el prestamo " ,prestamoPelicula(codigo,codigoCliente))
+            print("Se realizo el prestamo de la pelicula " , codigo)
            # registrarPrestamo(#codigo_barra, dni_cliente)#
 
 
