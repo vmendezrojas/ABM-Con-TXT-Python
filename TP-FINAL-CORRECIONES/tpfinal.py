@@ -96,7 +96,7 @@ def modificarPeliculas(codigo,codigoCliente):
                 if estadoD == str(renglon[3]) and codigo == str(renglon[0]):
                     pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+ estadoP +','+ codigoCliente +'\n')
                 elif estadoP == renglon[3] and codigo == renglon[0]:
-                    pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+ estadoD +','+ "None")
+                    pArchivocpy.writelines(str(codigo)+','+renglon[1]+','+renglon[2]+','+ estadoD +','+ "None" +'\n')
                 else:
                     pArchivocpy.write(linea)
                 linea = pArchivo.readline()
@@ -238,6 +238,7 @@ while opcion != 5:
             print("\nRegistrar Préstamo\n")
             codigo = input("Ingrese el codigo de barra de la pelicula a prestar\n")
             codigoCliente = input("Ingrese el DNI del cliente\n")
+            prestamoPelicula(codigo,codigoCliente)
             print("Se realizo el prestamo de la pelicula " , codigo)
            # registrarPrestamo(#codigo_barra, dni_cliente)#
 
@@ -246,7 +247,8 @@ while opcion != 5:
             print("Registrar Devolución\n")
             codigo = input("Ingrese el codigo de barra de la pelicula a devolver\n")
             codigoCliente = input("Ingrese el DNI del cliente\n")
-            print("Se realizo la devolucion " ,devolucionPelicula(codigo,codigoCliente))
+            devolucionPelicula(codigo,codigoCliente)
+            print("Se realizo la devolucion " , codigo)
         
         else:
             print("Opcion no valida")
