@@ -52,16 +52,16 @@ def prestamoPelicula():
 
 ###funcionespelicula####
 def altaPelicula():
-	nombrePeli = input("Ingrese el nombre: ")
-	anioPeli = input("Ingrese el año: ")
-	generoPeli = input("Ingrese el genero: ")
-	directorPeli = input("Ingrese el director: ")
-	print("Se agregó una nueva pelicula ", agregoEntradaPeli(nombrePeli, anioPeli, generoPeli, directorPeli))
+    nombrePeli = input("Ingrese el nombre: ")
+    anioPeli = input("Ingrese el año: ")
+    generoPeli = input("Ingrese el genero: ")
+    directorPeli = input("Ingrese el director: ")
+    print("Se agregó una nueva pelicula ", agregoEntradaPeli(nombrePeli, anioPeli, generoPeli, directorPeli))
 
 def agregoEntradaPeli(nombrePeli, anioPeli, generoPeli, directorPeli):
     with open("peliculas.txt", "a") as jArchi:
-	    jArchi.write(nombrePeli + "," + anioPeli + "," + generoPeli + "," + directorPeli + "\n")
-	    jArchi.close()
+        jArchi.write(nombrePeli + "," + anioPeli + "," + generoPeli + "," + directorPeli + "\n")
+     jArchi.close()
 
 ##############FIN FUNCIONES####################
 
